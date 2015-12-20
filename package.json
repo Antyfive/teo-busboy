@@ -1,0 +1,35 @@
+{
+  "name": "teo-multipart",
+  "version": "1.0.0",
+  "description": "Buspoy multipart parser wrapper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Antyfive/teo-multipart.git"
+  },
+  "keywords": [
+    "multipart",
+    "busboy",
+    "teo.js"
+  ],
+  "author": "Andrew Teologov <teologov.and@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Antyfive/teo-multipart/issues"
+  },
+  "homepage": "https://github.com/Antyfive/teo-multipart#readme",
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.2"
+  },
+  "engines": {
+    "node": ">= 4"
+  },
+  "dependencies": {
+    "busboy": "^0.2.12",
+    "lodash": "^3.10.1"
+  }
+}
