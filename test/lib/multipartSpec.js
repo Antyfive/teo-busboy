@@ -6,16 +6,19 @@
 
 "use strict";
 
-const Stream = require("stream").PassThrough,
-    Multipart = require("../../");
+const Stream = require("stream"),
+    Multipart = require("../../"),
+    isArray = Array.isArray;
 
 describe("Multipart Tests", () => {
 
-    let req, multipart;
+    let req, multipart, onFinishSpy, cleanupSpy;
 
     beforeEach(() => {
 
         req = mockRequest();
+        onFinishSpy = sinon.spy(Multipart.prototype, "onFinish");
+        cleanupSpy = sinon.spy(Multipart.prototype, "cleanup");
         multipart = new Multipart(req);
 
     });
@@ -23,24 +26,35 @@ describe("Multipart Tests", () => {
     afterEach(() => {
 
         req = multipart = null;
+        onFinishSpy.restore();
+        cleanupSpy.restore();
 
     });
 
-    it("Should parse request", function* (done) {
+    it("Should parse request", function* () {
 
         let part;
 
         while (part = yield multipart.form) {
 
-            console.log(part);
+            if (isArray(part)) {    // field
+                assert.equal(part.length, 4);
+            }
+            else {
+                assert.instanceOf(part, Stream);
+                part.resume();
+            }
         }
+
+        assert.isTrue(onFinishSpy.calledOnce);
+        assert.isTrue(cleanupSpy.calledOnce);
 
     });
 
 });
 
 function mockRequest() {
-    let stream = new Stream();
+    let stream = new Stream.PassThrough();
 
     stream.headers = {
         'content-type': 'multipart/form-data; boundary=---------------------------paZqsnEHRufoShdX6fh0lUhXBP4k'
