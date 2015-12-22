@@ -1,14 +1,14 @@
 {
-  "name": "teo-multipart",
+  "name": "teo-busboy",
   "version": "1.0.0",
-  "description": "Buspoy multipart parser wrapper",
+  "description": "Buspoy multipart wrapper",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --require ./test/common.js --reporter spec --ui bdd --recursive --colors"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Antyfive/teo-multipart.git"
+    "url": "git+https://github.com/Antyfive/teo-busboy.git"
   },
   "keywords": [
     "multipart",
@@ -18,9 +18,9 @@
   "author": "Andrew Teologov <teologov.and@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Antyfive/teo-multipart/issues"
+    "url": "https://github.com/Antyfive/teo-busboy/issues"
   },
-  "homepage": "https://github.com/Antyfive/teo-multipart#readme",
+  "homepage": "https://github.com/Antyfive/teo-busboy#readme",
   "devDependencies": {
     "chai": "^3.4.1",
     "co-mocha": "^1.1.2",

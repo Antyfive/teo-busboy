@@ -6,6 +6,6 @@
 
 "use strict";
 
-const Multipart = require("./lib/multipart");
+const Multipart = require("./lib/teoBusboy");
 
 module.exports = Multipart;

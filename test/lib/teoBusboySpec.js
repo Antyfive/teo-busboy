@@ -10,16 +10,26 @@ const Stream = require("stream"),
     Multipart = require("../../"),
     isArray = Array.isArray;
 
-describe("Multipart Tests", () => {
+describe("TeoBusboy Tests", () => {
 
-    let req, multipart, onFinishSpy, cleanupSpy;
+    let req, multipart, onFinishSpy, cleanupSpy, validateFileStub, validateFieldStub;
 
     beforeEach(() => {
 
         req = mockRequest();
         onFinishSpy = sinon.spy(Multipart.prototype, "onFinish");
         cleanupSpy = sinon.spy(Multipart.prototype, "cleanup");
-        multipart = new Multipart(req);
+
+        validateFileStub = sinon.stub();
+        validateFileStub.returns(true);
+
+        validateFieldStub = sinon.stub();
+        validateFieldStub.returns(true);
+
+        multipart = new Multipart(req, {
+            validateFile: validateFileStub,
+            validateField: validateFieldStub
+        });
 
     });
 
@@ -48,6 +58,51 @@ describe("Multipart Tests", () => {
 
         assert.isTrue(onFinishSpy.calledOnce);
         assert.isTrue(cleanupSpy.calledOnce);
+
+    });
+
+    it("Should validate file", function* () {
+        let part;
+
+        while (part = yield multipart.form) {
+            if (isArray(part)) {
+                // ...
+            }
+            else {
+                part.resume();
+            }
+        }
+
+        assert.isTrue(multipart.validateFile.calledTwice);
+
+    });
+
+    it("Should throw error if file is not valid", function* () {
+
+        validateFileStub.returns(false);
+        let teoBusboy = new Multipart(mockRequest(), {
+            validateFile: validateFileStub
+        });
+        let errCount = 0;
+
+        try {
+            let part;
+            while (part = yield teoBusboy.form) {
+                if (isArray(part)) {
+                    // ...
+                }
+                else {
+                    part.resume();
+                }
+            }
+        } catch(err) {
+            assert.equal(err.message, "File is not valid");
+            errCount++;
+        }
+
+        assert.isTrue(validateFileStub.called);
+        assert.equal(validateFileStub.args[0].length, 5);
+        assert.equal(errCount, 1);
 
     });
 
