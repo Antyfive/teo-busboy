@@ -9,10 +9,10 @@ Yieldable [Busboy](https://github.com/mscdex/busboy) multipart wrapper.
 const teoBusboy = require("teo-busboy");
 // your middleware
 function* (req, res, next) {
-  let multipart = new Multipart(req);
+  let multipart = new teoBusboy(req);
       part;
   
-  while (part = yield teoBusboy.form) {
+  while (part = yield multipart.form) {
       // if array, then it's a field
       if (Array.isArray(part)) {
           // work with your field ...  
