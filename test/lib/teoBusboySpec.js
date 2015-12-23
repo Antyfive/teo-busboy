@@ -48,7 +48,7 @@ describe("TeoBusboy Tests", () => {
         while (part = yield multipart.form) {
 
             if (isArray(part)) {    // field
-                assert.equal(part.length, 4);
+                assert.equal(part.length, 6);
             }
             else {
                 assert.instanceOf(part, Stream);
@@ -102,6 +102,52 @@ describe("TeoBusboy Tests", () => {
 
         assert.isTrue(validateFileStub.called);
         assert.equal(validateFileStub.args[0].length, 5);
+        assert.equal(errCount, 1);
+
+    });
+
+    it("Should validate field", function* () {
+        let part;
+
+        while (part = yield multipart.form) {
+            if (isArray(part)) {
+                // ...
+            }
+            else {
+                part.resume();
+            }
+        }
+
+        assert.isTrue(multipart.validateField.calledTwice);
+
+    });
+
+    it("Should throw error if field is not valid", function* () {
+
+        validateFieldStub.returns(false);
+
+        let teoBusboy = new Multipart(mockRequest(), {
+            validateField: validateFieldStub
+        });
+        let errCount = 0;
+
+        try {
+            let part;
+            while (part = yield teoBusboy.form) {
+                if (isArray(part)) {
+                    // ...
+                }
+                else {
+                    part.resume();
+                }
+            }
+        } catch(err) {
+            assert.equal(err.message, "Field is not valid");
+            errCount++;
+        }
+
+        assert.isTrue(validateFieldStub.called);
+        assert.equal(validateFieldStub.args[0].length, 6);
         assert.equal(errCount, 1);
 
     });
