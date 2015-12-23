@@ -1,7 +1,7 @@
 {
   "name": "teo-busboy",
   "version": "1.0.0",
-  "description": "Buspoy multipart wrapper",
+  "description": "Yieldable Buspoy multipart wrapper",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --require ./test/common.js --reporter spec --ui bdd --recursive --colors"
@@ -13,7 +13,8 @@
   "keywords": [
     "multipart",
     "busboy",
-    "teo.js"
+    "teo.js",
+    "yieldable"
   ],
   "author": "Andrew Teologov <teologov.and@gmail.com>",
   "license": "MIT",
