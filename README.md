@@ -15,9 +15,9 @@ function* (req, res, next) {
   while (part = yield teoBusboy.form) {
       // if array, then it's a field
       if (Array.isArray(part)) {
-      // ...  
+          // work with your field ...  
       }
-      else {  // means, it't a stream
+      else {  // it's a stream
           part.pipe(fs.createWriteStream("myfile"));
       }
   }
