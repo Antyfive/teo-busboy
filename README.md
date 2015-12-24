@@ -10,10 +10,10 @@ $ npm i -S teo-busboy
 ```
 ## Usage example
 ```javascript 
-const teoBusboy = require("teo-busboy");
+const TeoBusboy = require("teo-busboy");
 // your middleware
 function* (req, res, next) {
-    let multipart = new teoBusboy(req);
+    let multipart = new TeoBusboy(req);
         part;
   
     while (part = yield multipart.form) {
@@ -31,10 +31,10 @@ function* (req, res, next) {
 ```
 ## Validation example
 ```javascript
-const teoBusboy = require("teo-busboy");
+const TeoBusboy = require("teo-busboy");
 // your middleware
 function* (req, res, next) {
-    let multipart = new teoBusboy(req, {
+    let multipart = new TeoBusboy(req, {
             validateFile: function(fieldName, file, fileName, encoding, mimeType) {
                 // return boolean 
             },
